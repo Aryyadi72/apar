@@ -11,6 +11,7 @@ class KondisiApar extends Model
 
     protected $fillable = [
         'id_apar',
+        'tahun',
         'bulan',
         'segel',
         'jarum',
