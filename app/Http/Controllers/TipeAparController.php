@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisi;
 use App\Models\TipeApar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 
 class TipeAparController extends Controller
 {
@@ -69,5 +72,39 @@ class TipeAparController extends Controller
             toastr()->closeOnHover(true)->closeDuration(10)->error('Data tidak berhasil dihapus!');
             return redirect()->route('tipe-apar');
         }
+    }
+
+    public function summary_jenis_apar(Request $request)
+    {
+        $title = 'Summary Jenis Apar';
+
+        $summaryTipeApar = DB::table('apars')
+            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+            ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
+
+            ->select(
+                'divisis.divisi',
+                DB::raw("SUM(tipe_apars.tipe = 'Foam') as foam"),
+                DB::raw("SUM(tipe_apars.tipe = 'Powder') as powder"),
+                DB::raw("SUM(tipe_apars.tipe = 'CO') as co")
+            )
+            ->groupBy('divisis.divisi')
+            ->get();
+
+            $totals = [
+                'foam' => $summaryTipeApar->sum('foam'),
+                'powder' => $summaryTipeApar->sum('powder'),
+                'co' => $summaryTipeApar->sum('co'),
+                'jumlah' => $summaryTipeApar->sum(function ($data) {
+                    return $data->foam + $data->powder + $data->co;
+                }),
+            ];
+
+        return view('summary.summary-tipe-apar', [
+            'title' => $title,
+            'summaryTipeApar' => $summaryTipeApar,
+            'totals' => $totals,
+        ]);
     }
 }

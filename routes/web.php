@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChecklistAparController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -69,3 +70,13 @@ Route::delete('/kondisi-apar/delete/{id}', [KondisiAparController::class, 'delet
 // Summary
 Route::get('/summary-kondisi-apar', [KondisiAparController::class, 'summary_kondisi_apar_perbulan'])->name('summary-kondisi-apar');
 Route::get('/summary-kondisi-apar-lokasi', [KondisiAparController::class, 'summary_kondisi_apar_perlokasi'])->name('summary-kondisi-apar-lokasi');
+Route::get('/summary-tipe-apar', [TipeAparController::class, 'summary_jenis_apar'])->name('summary-tipe-apar');
+Route::get('/summary-merk-apar', [MerkController::class, 'summary_merk_apar'])->name('summary-merk-apar');
+
+// Checklist Apar
+Route::get('/checklist-apar', [ChecklistAparController::class, 'index'])->name('checklist-apar');
+Route::get('/checklist-apar/create', [ChecklistAparController::class, 'create'])->name('checklist-apar.create');
+Route::post('/checklist-apar/store', [ChecklistAparController::class, 'store'])->name('checklist-apar.store');
+Route::get('/checklist-apar/edit/{id}', [ChecklistAparController::class, 'edit'])->name('checklist-apar.edit');
+Route::put('/checklist-apar/update/{id}', [ChecklistAparController::class, 'update'])->name('checklist-apar.update');
+Route::delete('/checklist-apar/delete/{id}', [ChecklistAparController::class, 'delete'])->name('checklist-apar.delete');

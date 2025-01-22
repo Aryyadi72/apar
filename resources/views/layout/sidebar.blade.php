@@ -60,14 +60,22 @@
                     <span>Summary Kondisi
                         Apar</span></a></li>
 
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-file-alt"></i> <span>Summary Jenis
+            <li class="{{ Str::startsWith($currentRoute, 'summary-tipe-apar') ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ route('summary-tipe-apar') }}"><i class="fas fa-file-alt"></i>
+                    <span>Summary Jenis
                         Apar</span></a>
             </li>
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-tasks"></i> <span>Summary Merk Apar</span></a>
+
+            <li class="{{ Str::startsWith($currentRoute, 'summary-merk-apar') ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ route('summary-merk-apar') }}"><i class="fas fa-tasks"></i> <span>Summary Merk
+                        Apar</span></a>
             </li>
+
             <li><a class="nav-link" href="blank.html"><i class="fas fa-clipboard-list"></i> <span>Kontrol
                         Apar</span></a></li>
-            <li><a class="nav-link" href="blank.html"><i class="fas fa-th-list"></i> <span>Checklist Apar</span></a>
+
+            <li class="{{ Str::startsWith($currentRoute, 'checklist-apar') ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ route('checklist-apar') }}"><i class="fas fa-th-list"></i> <span>Checklist Apar</span></a>
             </li>
 
         </ul>

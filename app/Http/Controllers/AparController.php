@@ -180,4 +180,9 @@ class AparController extends Controller
             return redirect()->route('tipe-apar');
         }
     }
+
+    public function checklist_apar()
+    {
+
+    }
 }
