@@ -71,6 +71,19 @@
                                             placeholder="Masukkan tanggal pembelian apar" name="tanggal_pembelian"
                                             value="{{ $apar->tanggal_pembelian }}">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label>Latitude</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan latitude"
+                                            name="latitude" value="{{ $apar->latitude }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Longitude</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan longitude"
+                                            name="longitude" value="{{ $apar->longitude }}">
+                                    </div>
+
                                 </div>
                                 <div class="card-footer">
                                     <a href="{{ route('apar') }}" class="btn btn-danger">Kembali</a>

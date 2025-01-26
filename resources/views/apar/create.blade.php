@@ -66,6 +66,18 @@
                                         <input type="date" class="form-control"
                                             placeholder="Masukkan tanggal pembelian apar" name="tanggal_pembelian">
                                     </div>
+
+                                    <div class="form-group">
+                                        <label>Latitude</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan latitude"
+                                            name="latitude">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Longitude</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan longitude"
+                                            name="longitude">
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <a href="{{ route('apar') }}" class="btn btn-danger">Kembali</a>

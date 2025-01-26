@@ -8,6 +8,7 @@ use App\Models\Merk;
 use App\Models\TipeApar;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class AparController extends Controller
 {
@@ -16,22 +17,49 @@ class AparController extends Controller
     {
         $title = 'Apar';
 
-        $apars = DB::table('apars')
-            ->join('merks', 'merks.id', '=', 'apars.id_merk')
-            ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
-            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-            ->select(
-                'apars.id as apar_id',
-                'apars.kode_apar',
-                'apars.berat',
-                'apars.tanggal_pembelian',
-                'merks.merk',
-                'tipe_apars.tipe',
-                'lokasis.lokasi',
-                'divisis.divisi'
-            )
-            ->get();
+        $divisiId = Session::get('id_divisi');
+
+        if ($divisiId == null) {
+            $apars = DB::table('apars')
+                ->join('merks', 'merks.id', '=', 'apars.id_merk')
+                ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'apars.latitude',
+                    'apars.longitude',
+                    'merks.merk',
+                    'tipe_apars.tipe',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->get();
+        } else {
+            $apars = DB::table('apars')
+                ->join('merks', 'merks.id', '=', 'apars.id_merk')
+                ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'apars.latitude',
+                    'apars.longitude',
+                    'merks.merk',
+                    'tipe_apars.tipe',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->where('divisis.id', $divisiId)
+                ->get();
+        }
+
 
         $merks = Merk::all();
 
@@ -90,6 +118,8 @@ class AparController extends Controller
             'id_tipe' => 'required|integer',
             'id_lokasi' => 'required|integer',
             'berat' => 'required|string|max:255',
+            'latitude' => 'required|string|max:255',
+            'longitude' => 'required|string|max:255',
         ]);
 
         $apar = new Apar();
@@ -99,6 +129,8 @@ class AparController extends Controller
         $apar->id_lokasi = $request->id_lokasi;
         $apar->berat = $request->berat;
         $apar->tanggal_pembelian = $request->tanggal_pembelian;
+        $apar->latitude = $request->latitude;
+        $apar->longitude = $request->longitude;
         $apar->save();
 
         if ($apar) {
@@ -147,6 +179,8 @@ class AparController extends Controller
             'id_tipe' => 'required|integer',
             'id_lokasi' => 'required|integer',
             'berat' => 'required|string|max:255',
+            'latitude' => 'required|string|max:255',
+            'longitude' => 'required|string|max:255',
         ]);
 
         $apar = Apar::findOrFail($id);
@@ -156,6 +190,8 @@ class AparController extends Controller
         $apar->id_lokasi = $request->id_lokasi;
         $apar->berat = $request->berat;
         $apar->tanggal_pembelian = $request->tanggal_pembelian;
+        $apar->latitude = $request->latitude;
+        $apar->longitude = $request->longitude;
         $apar->save();
 
         if ($apar) {

@@ -14,6 +14,8 @@ class Apar extends Model
         'id_merk',
         'id_tipe',
         'berat',
-        'tanggal_pembelian'
+        'tanggal_pembelian',
+        'latitude',
+        'longitude'
     ];
 }

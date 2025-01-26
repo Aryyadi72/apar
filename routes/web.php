@@ -4,6 +4,7 @@ use App\Http\Controllers\ChecklistAparController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MerkController;
@@ -12,12 +13,22 @@ use App\Http\Controllers\AparController;
 use App\Http\Controllers\RefillController;
 use App\Http\Controllers\KondisiAparController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+// Login
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.process');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// User
+Route::get('/user', [UserController::class, 'index'])->name('user');
+Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 
 // Divisi
 Route::get('/divisi', [DivisiController::class, 'index'])->name('divisi');

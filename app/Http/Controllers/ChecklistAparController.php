@@ -6,6 +6,7 @@ use App\Models\Apar;
 use App\Models\ChecklistApar;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class ChecklistAparController extends Controller
 {
@@ -13,29 +14,54 @@ class ChecklistAparController extends Controller
     {
         $title = 'Checklist Apar';
 
-        $checklistApars = DB::table('checklist_apars')
-            ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
-            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-            ->select(
-                'checklist_apars.tanggal_pengecekan',
-                'checklist_apars.kondisi_segel',
-                'checklist_apars.posisi_jarum',
-                'checklist_apars.kondisi_selang',
-                'checklist_apars.kondisi_tabung',
-                'checklist_apars.kondisi_air',
-                'checklist_apars.kondisi_karung',
-                'checklist_apars.kondisi_box',
-                'checklist_apars.lain_lain',
-                'checklist_apars.komentar',
-                'lokasis.lokasi',
-                'apars.kode_apar'
-            )
-            ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
-            ->orderBy('checklist_apars.tanggal_pengecekan')
-            ->get()
-            ->groupBy('bulan');
+        $divisiId = Session::get('id_divisi');
 
-        // dd($checklistApars);
+        if ($divisiId == null) {
+            $checklistApars = DB::table('checklist_apars')
+                ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->select(
+                    'checklist_apars.tanggal_pengecekan',
+                    'checklist_apars.kondisi_segel',
+                    'checklist_apars.posisi_jarum',
+                    'checklist_apars.kondisi_selang',
+                    'checklist_apars.kondisi_tabung',
+                    'checklist_apars.kondisi_air',
+                    'checklist_apars.kondisi_karung',
+                    'checklist_apars.kondisi_box',
+                    'checklist_apars.lain_lain',
+                    'checklist_apars.komentar',
+                    'lokasis.lokasi',
+                    'apars.kode_apar'
+                )
+                ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
+                ->orderBy('checklist_apars.tanggal_pengecekan')
+                ->get()
+                ->groupBy('bulan');
+        } else {
+            $checklistApars = DB::table('checklist_apars')
+                ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->select(
+                    'checklist_apars.tanggal_pengecekan',
+                    'checklist_apars.kondisi_segel',
+                    'checklist_apars.posisi_jarum',
+                    'checklist_apars.kondisi_selang',
+                    'checklist_apars.kondisi_tabung',
+                    'checklist_apars.kondisi_air',
+                    'checklist_apars.kondisi_karung',
+                    'checklist_apars.kondisi_box',
+                    'checklist_apars.lain_lain',
+                    'checklist_apars.komentar',
+                    'lokasis.lokasi',
+                    'apars.kode_apar'
+                )
+                ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
+                ->orderBy('checklist_apars.tanggal_pengecekan')
+                ->where('lokasis.id_divisi', $divisiId)
+                ->get()
+                ->groupBy('bulan');
+        }
 
         return view('checklist-apar.index', [
             'title' => $title,

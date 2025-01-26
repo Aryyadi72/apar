@@ -27,38 +27,27 @@
                                                 <th class="text-center">
                                                     No
                                                 </th>
-                                                <th>Divisi</th>
-                                                {{-- <th>Petugas</th> --}}
-                                                {{-- <th>Asst. Sub Div</th> --}}
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Level</th>
                                                 <th class="text-center">Option</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($divisis as $index => $divisi)
+                                            @foreach ($users as $index => $user)
                                                 <tr>
                                                     <td class="text-center">{{ $index + 1 }}</td>
-                                                    <td>{{ $divisi->divisi }}</td>
-
-                                                    {{-- @if ($divisi->level == 'Petugas' && $divisi->name == null)
-                                                        <td>-</td>
-                                                    @else
-                                                        <td>{{ $divisi->name }}</td>
-                                                    @endif
-
-                                                    @if ($divisi->level == 'Asst. Sub Div' && $divisi->name == null)
-                                                        <td>-</td>
-                                                    @else
-                                                        <td>{{ $divisi->name }}</td>
-                                                    @endif --}}
-
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>{{ $user->level }}</td>
                                                     <td class="text-center">
                                                         <button class="btn btn-icon btn-primary" id="modal-1"
                                                             data-toggle="modal"
-                                                            data-target="#editModal-{{ $divisi->id }}"><i
+                                                            data-target="#editModal-{{ $user->id_user }}"><i
                                                                 class="far fa-edit"></i></button>
                                                         <button class="btn btn-icon btn-danger" id="modal-1"
                                                             data-toggle="modal"
-                                                            data-target="#deleteModal-{{ $divisi->id }}"><i
+                                                            data-target="#deleteModal-{{ $user->id_user }}"><i
                                                                 class="fas fa-times"></i></button>
                                                     </td>
                                                 </tr>
@@ -84,11 +73,34 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('divisi.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Masukkan nama divisi" name="divisi">
+                            <input type="text" class="form-control" placeholder="Masukkan nama" name="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Masukkan email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Masukkan password" name="password">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="level">
+                                <option value="" selected disabled>Pilih Level</option>
+                                <option value="Petugas">Petugas</option>
+                                <option value="Asst. Sub Div">Asst. Sub Div</option>
+                                <option value="Asst. DP">Asst. DP</option>
+                                <option value="Mng. HRD & GA">Mng. HRD & GA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="id_divisi">
+                                <option value="" selected disabled>Pilih Divisi</option>
+                                @foreach ($divisis as $divisi)
+                                    <option value="{{ $divisi->divisi_id }}">{{ $divisi->divisi }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke">
@@ -100,9 +112,9 @@
         </div>
     </div>
 
-    @foreach ($divisis as $divisi)
+    @foreach ($users as $user)
         {{-- Modal Update --}}
-        <div class="modal fade" tabindex="-1" role="dialog" id="editModal-{{ $divisi->id }}">
+        <div class="modal fade" tabindex="-1" role="dialog" id="editModal-{{ $user->id_user }}">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -111,13 +123,45 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('divisi.update', $divisi->id) }}" method="POST">
+                    <form action="{{ route('user.update', $user->id_user) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Masukkan nama divisi" name="divisi"
-                                    value="{{ $divisi->divisi }}">
+                                <input type="text" class="form-control" placeholder="Masukkan nama" name="name"
+                                    value="{{ $user->name }}">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Masukkan email" name="email"
+                                    value="{{ $user->email }}">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Masukkan password"
+                                    name="password">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="level">
+                                    <option value="" selected disabled>Pilih Level</option>
+                                    <option value="Petugas" {{ $user->level == 'Petugas' ? 'selected' : '' }}>Petugas
+                                    </option>
+                                    <option value="Asst. Sub Div" {{ $user->level == 'Asst. Sub Div' ? 'selected' : '' }}>
+                                        Asst. Sub Div</option>
+                                    <option value="Asst. DP" {{ $user->level == 'Asst. DP' ? 'selected' : '' }}>Asst. DP
+                                    </option>
+                                    <option value="Mng. HRD & GA" {{ $user->level == 'Mng. HRD & GA' ? 'selected' : '' }}>
+                                        Mng. HRD & GA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="id_divisi">
+                                    @foreach ($divisis as $divisi)
+                                        <option value="" {{ $divisi->divisi_id == null ? 'selected' : '' }}>Pilih
+                                            Divisi</option>
+                                        <option value="{{ $divisi->id }}"
+                                            {{ $divisi->id == $user->id_divisi ? 'selected' : '' }}>
+                                            {{ $divisi->divisi }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="modal-footer bg-whitesmoke">
@@ -130,7 +174,7 @@
         </div>
 
         {{-- Modal Delete --}}
-        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal-{{ $divisi->id }}">
+        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal-{{ $user->id_user }}">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -139,7 +183,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('divisi.delete', $divisi->id) }}" method="POST">
+                    <form action="{{ route('user.delete', $user->id_user) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">

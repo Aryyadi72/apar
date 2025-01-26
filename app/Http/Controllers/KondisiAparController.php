@@ -9,6 +9,7 @@ use App\Models\Merk;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class KondisiAparController extends Controller
 {
@@ -16,26 +17,52 @@ class KondisiAparController extends Controller
     {
         $title = 'Kondisi Apar';
 
-        $kondisiApars = DB::table('kondisi_apars')
-            ->join('apars', 'apars.id', '=', 'kondisi_apars.id_apar')
-            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-            ->select(
-                'kondisi_apars.bulan',
-                'kondisi_apars.segel',
-                'kondisi_apars.jarum',
-                'kondisi_apars.tabung',
-                'kondisi_apars.selang',
-                'kondisi_apars.nozzle',
-                'kondisi_apars.judge',
-                'apars.id as apar_id',
-                'apars.kode_apar',
-                'apars.berat',
-                'apars.tanggal_pembelian',
-                'lokasis.lokasi',
-                'divisis.divisi'
-            )
-            ->get();
+        $divisiId = Session::get('id_divisi');
+
+        if ($divisiId == null) {
+            $kondisiApars = DB::table('kondisi_apars')
+                ->join('apars', 'apars.id', '=', 'kondisi_apars.id_apar')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'kondisi_apars.bulan',
+                    'kondisi_apars.segel',
+                    'kondisi_apars.jarum',
+                    'kondisi_apars.tabung',
+                    'kondisi_apars.selang',
+                    'kondisi_apars.nozzle',
+                    'kondisi_apars.judge',
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->get();
+        } else {
+            $kondisiApars = DB::table('kondisi_apars')
+                ->join('apars', 'apars.id', '=', 'kondisi_apars.id_apar')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'kondisi_apars.bulan',
+                    'kondisi_apars.segel',
+                    'kondisi_apars.jarum',
+                    'kondisi_apars.tabung',
+                    'kondisi_apars.selang',
+                    'kondisi_apars.nozzle',
+                    'kondisi_apars.judge',
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->where('divisis.id', $divisiId)
+                ->get();
+        }
 
         return view('kondisi-apar.index', [
             'title' => $title,

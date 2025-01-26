@@ -6,6 +6,7 @@ use App\Models\Refill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class RefillController extends Controller
 {
@@ -13,26 +14,54 @@ class RefillController extends Controller
     {
         $title = 'Refill Apar';
 
-        $refills = DB::table('refills')
-            ->join('apars', 'apars.id', '=', 'refills.id_apar')
-            ->join('merks', 'merks.id', '=', 'apars.id_merk')
-            ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
-            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-            ->select(
-                'refills.standard_pengisian',
-                'refills.terakhir_refill',
-                'refills.next_refill',
-                'apars.id as apar_id',
-                'apars.kode_apar',
-                'apars.berat',
-                'apars.tanggal_pembelian',
-                'merks.merk',
-                'tipe_apars.tipe',
-                'lokasis.lokasi',
-                'divisis.divisi'
-            )
-            ->get();
+        $divisiId = Session::get('id_divisi');
+
+        if ($divisiId == null) {
+            $refills = DB::table('refills')
+                ->join('apars', 'apars.id', '=', 'refills.id_apar')
+                ->join('merks', 'merks.id', '=', 'apars.id_merk')
+                ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'refills.standard_pengisian',
+                    'refills.terakhir_refill',
+                    'refills.next_refill',
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'merks.merk',
+                    'tipe_apars.tipe',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->get();
+        } else {
+            $refills = DB::table('refills')
+                ->join('apars', 'apars.id', '=', 'refills.id_apar')
+                ->join('merks', 'merks.id', '=', 'apars.id_merk')
+                ->join('tipe_apars', 'tipe_apars.id', '=', 'apars.id_tipe')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'refills.standard_pengisian',
+                    'refills.terakhir_refill',
+                    'refills.next_refill',
+                    'apars.id as apar_id',
+                    'apars.kode_apar',
+                    'apars.berat',
+                    'apars.tanggal_pembelian',
+                    'merks.merk',
+                    'tipe_apars.tipe',
+                    'lokasis.lokasi',
+                    'divisis.divisi'
+                )
+                ->where('divisis.id', $divisiId)
+                ->get();
+        }
+
+
 
         return view('refill.index', [
             'title' => $title,
