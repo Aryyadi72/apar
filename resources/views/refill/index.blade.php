@@ -32,6 +32,8 @@
                                                 <th>Standard Pengisian</th>
                                                 <th>Terakhir Refill</th>
                                                 <th>Next Refill</th>
+                                                <th>Keterangan</th>
+                                                <th>Option</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -46,6 +48,21 @@
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($refill->next_refill)->format('F Y') }}
                                                     </td>
+                                                    @php
+                                                        $next_refill = $refill->next_refill;
+                                                    @endphp
+                                                    @if ($next_refill == $today)
+                                                        <td>Perlu Refill!!!</td>
+                                                    @else
+                                                        <td>-</td>
+                                                    @endif
+                                                    @if ($next_refill == $today)
+                                                        <td><button class="btn btn-icon btn-primary"><i
+                                                                    class="fas fa-gas-pump"></i></button></td>
+                                                    @else
+                                                        <td><button class="btn btn-icon btn-secondary" disabled><i
+                                                                    class="fas fa-gas-pump"></i></button></td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
