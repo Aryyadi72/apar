@@ -16,6 +16,8 @@ class RefillController extends Controller
 
         $divisiId = Session::get('id_divisi');
 
+        $today = Carbon::today();
+
         if ($divisiId == null) {
             $refills = DB::table('refills')
                 ->join('apars', 'apars.id', '=', 'refills.id_apar')
@@ -61,11 +63,10 @@ class RefillController extends Controller
                 ->get();
         }
 
-
-
         return view('refill.index', [
             'title' => $title,
             'refills' => $refills,
+            'today' => $today
         ]);
     }
 

@@ -15,9 +15,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
-                            </div>
+                            @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                                <div class="card-header">
+                                    <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
@@ -53,14 +55,16 @@
                                                         </td>
                                                     @endif
                                                     <td class="text-center">
-                                                        <a href="{{ route('apar.edit', $apar->apar_id) }}"
-                                                            class="btn btn-icon btn-primary">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                        <button class="btn btn-icon btn-danger" id="modal-1"
-                                                            data-toggle="modal"
-                                                            data-target="#deleteModal-{{ $apar->apar_id }}"><i
-                                                                class="fas fa-times"></i></button>
+                                                        @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                                                            <a href="{{ route('apar.edit', $apar->apar_id) }}"
+                                                                class="btn btn-icon btn-primary">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                            <button class="btn btn-icon btn-danger" id="modal-1"
+                                                                data-toggle="modal"
+                                                                data-target="#deleteModal-{{ $apar->apar_id }}"><i
+                                                                    class="fas fa-times"></i></button>
+                                                        @endif
                                                         <button class="btn btn-icon btn-success" id="modal-1"
                                                             data-toggle="modal"
                                                             data-target="#refillModal-{{ $apar->apar_id }}"><i
