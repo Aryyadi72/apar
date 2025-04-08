@@ -15,10 +15,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
-                                    data-target="#createModal"> Tambah Data</button>
-                            </div>
+                            @if (session('level') == 'Mng. HRD & GA')
+                                <div class="card-header">
+                                    <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
+                                        data-target="#createModal"> Tambah Data</button>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
