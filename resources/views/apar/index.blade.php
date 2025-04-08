@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                            @if (session('level') != 'Asst. HSE & DP')
                                 <div class="card-header">
                                     <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
                                 </div>
@@ -35,7 +35,9 @@
                                                 <th>Lokasi</th>
                                                 <th>Berat</th>
                                                 <th>Tanggal Pembelian</th>
-                                                <th class="text-center">Option</th>
+                                                @if (session('level') != 'Asst. HSE & DP')
+                                                    <th class="text-center">Option</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -54,26 +56,28 @@
                                                         <td>{{ \Carbon\Carbon::parse($apar->tanggal_pembelian)->format('d-m-Y') }}
                                                         </td>
                                                     @endif
-                                                    <td class="text-center">
-                                                        @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
-                                                            <a href="{{ route('apar.edit', $apar->apar_id) }}"
-                                                                class="btn btn-icon btn-primary">
-                                                                <i class="far fa-edit"></i>
-                                                            </a>
-                                                            <button class="btn btn-icon btn-danger" id="modal-1"
+                                                    @if (session('level') != 'Asst. HSE & DP')
+                                                        <td class="text-center">
+                                                            @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                                                                <a href="{{ route('apar.edit', $apar->apar_id) }}"
+                                                                    class="btn btn-icon btn-primary">
+                                                                    <i class="far fa-edit"></i>
+                                                                </a>
+                                                                <button class="btn btn-icon btn-danger" id="modal-1"
+                                                                    data-toggle="modal"
+                                                                    data-target="#deleteModal-{{ $apar->apar_id }}"><i
+                                                                        class="fas fa-times"></i></button>
+                                                            @endif
+                                                            <button class="btn btn-icon btn-success" id="modal-1"
                                                                 data-toggle="modal"
-                                                                data-target="#deleteModal-{{ $apar->apar_id }}"><i
-                                                                    class="fas fa-times"></i></button>
-                                                        @endif
-                                                        <button class="btn btn-icon btn-success" id="modal-1"
-                                                            data-toggle="modal"
-                                                            data-target="#refillModal-{{ $apar->apar_id }}"><i
-                                                                class="fas fa-gas-pump"></i></button>
-                                                        <button class="btn btn-icon btn-warning" id="modal-1"
-                                                            data-toggle="modal"
-                                                            data-target="#kondisiAparModal-{{ $apar->apar_id }}"><i
-                                                                class="fas fa-check-circle"></i></button>
-                                                    </td>
+                                                                data-target="#refillModal-{{ $apar->apar_id }}"><i
+                                                                    class="fas fa-gas-pump"></i></button>
+                                                            <button class="btn btn-icon btn-warning" id="modal-1"
+                                                                data-toggle="modal"
+                                                                data-target="#kondisiAparModal-{{ $apar->apar_id }}"><i
+                                                                    class="fas fa-check-circle"></i></button>
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
