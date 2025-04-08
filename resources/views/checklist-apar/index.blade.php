@@ -15,10 +15,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <a href="{{ route('checklist-apar.create') }}" class="btn btn-icon btn-primary">Tambah
-                                    Data</a>
-                            </div>
+                            @if (session('level') != 'Asst. Sub Div')
+                                <div class="card-header">
+                                    <a href="{{ route('checklist-apar.create') }}" class="btn btn-icon btn-primary">Tambah
+                                        Data</a>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">

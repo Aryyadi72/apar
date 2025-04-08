@@ -4,10 +4,13 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">SIGMAPAR</a>
+            <a href="index.html"><img src="{{ asset('assets/img/bridgestone.png') }}" alt="logo" width="150"
+                    style="padding-bottom: 100px; padding-top: -100px;"></a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">SG</a>
+            <a href="index.html"><img src="{{ asset('assets/img/logo_bs.png') }}" alt="logo" width="50"
+                    style="padding-bottom: 100px; padding-top: -50px;"></a>
+            {{-- <a href="index.html">SG</a> --}}
         </div>
         <ul class="sidebar-menu">
 

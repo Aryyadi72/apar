@@ -92,7 +92,7 @@
                                 <option value="" selected disabled>Pilih Level</option>
                                 <option value="Petugas">Petugas</option>
                                 <option value="Asst. Sub Div">Asst. Sub Div</option>
-                                <option value="Asst. DP">Asst. DP</option>
+                                <option value="Asst. HSE & DP">Asst. HSE & DP</option>
                                 <option value="Mng. HRD & GA">Mng. HRD & GA</option>
                             </select>
                         </div>
@@ -148,7 +148,7 @@
                                     </option>
                                     <option value="Asst. Sub Div" {{ $user->level == 'Asst. Sub Div' ? 'selected' : '' }}>
                                         Asst. Sub Div</option>
-                                    <option value="Asst. DP" {{ $user->level == 'Asst. DP' ? 'selected' : '' }}>Asst. DP
+                                    <option value="Asst. HSE & DP" {{ $user->level == 'Asst. HSE & DP' ? 'selected' : '' }}>Asst. HSE & DP
                                     </option>
                                     <option value="Mng. HRD & GA" {{ $user->level == 'Mng. HRD & GA' ? 'selected' : '' }}>
                                         Mng. HRD & GA</option>

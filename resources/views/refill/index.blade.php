@@ -33,7 +33,9 @@
                                                 <th>Terakhir Refill</th>
                                                 <th>Next Refill</th>
                                                 <th>Keterangan</th>
-                                                <th>Option</th>
+                                                @if (session('level') != 'Asst. Sub Div')
+                                                    <th>Option</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,11 +59,15 @@
                                                         <td>-</td>
                                                     @endif
                                                     @if ($next_refill == $today)
-                                                        <td><button class="btn btn-icon btn-primary"><i
-                                                                    class="fas fa-gas-pump"></i></button></td>
+                                                        @if (session('level') != 'Asst. Sub Div')
+                                                            <td><button class="btn btn-icon btn-primary"><i
+                                                                        class="fas fa-gas-pump"></i></button></td>
+                                                        @endif
                                                     @else
-                                                        <td><button class="btn btn-icon btn-secondary" disabled><i
-                                                                    class="fas fa-gas-pump"></i></button></td>
+                                                        @if (session('level') != 'Asst. Sub Div')
+                                                            <td><button class="btn btn-icon btn-secondary" disabled><i
+                                                                        class="fas fa-gas-pump"></i></button></td>
+                                                        @endif
                                                     @endif
                                                 </tr>
                                             @endforeach
