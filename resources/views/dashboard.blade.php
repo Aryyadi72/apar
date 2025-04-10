@@ -77,6 +77,13 @@
                                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                 }).addTo(map);
 
+                                var circle = L.circle([-3.62661997195365, 114.86067632270333], {
+                                    color: 'red',
+                                    fillColor: '#f03',
+                                    fillOpacity: 0.5,
+                                    radius: 500
+                                }).addTo(map);
+
                                 @foreach ($apars as $apar)
                                     L.marker([{{ $apar->latitude }}, {{ $apar->longitude }}])
                                         .addTo(map)

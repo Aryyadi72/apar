@@ -73,15 +73,24 @@ class ChecklistAparController extends Controller
     {
         $title = 'Tambah Checklist Apar';
 
-        $apars = DB::table('apars')
-            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-            ->select(
-                'apars.id as id_apar',
-                'lokasis.lokasi',
-                'divisis.divisi',
-            )
+        $cekDataApars = DB::table('apars')
+            ->join('checklist_apars', 'checklist_apars.id_apar', '=', 'apars.id')
             ->get();
+
+        foreach ($cekDataApars as $cekDataApar) {
+            $apars = DB::table('apars')
+                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+                ->select(
+                    'apars.id as id_apar',
+                    'lokasis.lokasi',
+                    'divisis.divisi',
+                )
+                ->where('apars.id', '!=', $cekDataApar->id_apar)
+                ->get();
+        }
+
+        // dd($apars);
 
         return view('checklist-apar.create', [
             'title' => $title,

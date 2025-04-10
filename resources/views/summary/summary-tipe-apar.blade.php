@@ -32,9 +32,9 @@
                                             @foreach ($summaryTipeApar as $tipeApar)
                                                 <tr>
                                                     <td>{{ $tipeApar->divisi }}</td>
-                                                    <td>{{ $tipeApar->foam ?: '-' }}</td>
-                                                    <td>{{ $tipeApar->powder ?: '-' }}</td>
-                                                    <td>{{ $tipeApar->co ?: '-' }}</td>
+                                                    <td>{{ $tipeApar->foam ?: '0' }}</td>
+                                                    <td>{{ $tipeApar->powder ?: '0' }}</td>
+                                                    <td>{{ $tipeApar->co ?: '0' }}</td>
                                                     <td>{{ $tipeApar->foam + $tipeApar->powder + $tipeApar->co }}</td>
                                                 </tr>
                                             @endforeach

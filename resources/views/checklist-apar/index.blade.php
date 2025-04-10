@@ -36,18 +36,18 @@
                                                 <th rowspan="2">Apakah box dalam kondisi bersih</th>
                                                 <th rowspan="2">Lain-lain</th>
                                                 <th rowspan="2">Komentar</th>
-                                                <th colspan="5">Approve</th>
+                                                {{-- <th colspan="5">Approve</th> --}}
                                             </tr>
                                             <tr>
                                                 <th>Kondisi Segel</th>
                                                 <th>Jarum berada pada warna hijau</th>
                                                 <th>Selang baik (tidak retak/cacat)</th>
                                                 <th>Tabung tidak berkarat</th>
-                                                <th>Petugas</th>
-                                                <th>Asst. Sub. Div</th>
+                                                {{-- <th>Petugas</th> --}}
+                                                {{-- <th>Asst. Sub. Div</th>
                                                 <th>Asst. DP</th>
                                                 <th>Asst. HSE & DP</th>
-                                                <th>Mng. HSE & DP</th>
+                                                <th>Mng. HSE & DP</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">
