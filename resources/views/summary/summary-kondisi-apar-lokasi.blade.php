@@ -29,7 +29,7 @@
                                             </tr>
                                             <tr>
                                                 <th>OK</th>
-                                                <th>NG</th>
+                                                <th>ko</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">

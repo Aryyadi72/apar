@@ -15,9 +15,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <!-- @if(session('level') == 'Petugas')
                             <div class="card-header">
-                                {{-- <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a> --}}
-                            </div>
+                                    <a href="{{ route('kondisi-apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
+                                </div>
+                                @endif -->
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">

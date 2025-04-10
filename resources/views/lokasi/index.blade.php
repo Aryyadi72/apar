@@ -15,10 +15,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
-                                    data-target="#createModal"> Tambah Data</button>
-                            </div>
+                            @if (session('level') != 'Asst. HSE & DP')
+                                <div class="card-header">
+                                    <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
+                                        data-target="#createModal"> Tambah Data</button>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
@@ -29,7 +31,9 @@
                                                 </th>
                                                 <th>Divisi</th>
                                                 <th>Lokasi</th>
-                                                <th class="text-center">Option</th>
+                                                @if (session('level') != 'Asst. HSE & DP')
+                                                    <th class="text-center">Option</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -38,16 +42,18 @@
                                                     <td class="text-center">{{ $index + 1 }}</td>
                                                     <td>{{ $lokasi->nama_divisi }}</td>
                                                     <td>{{ $lokasi->nama_lokasi }}</td>
-                                                    <td class="text-center">
-                                                        <button class="btn btn-icon btn-primary" id="modal-1"
-                                                            data-toggle="modal"
-                                                            data-target="#editModal-{{ $lokasi->id_lokasi }}"><i
-                                                                class="far fa-edit"></i></button>
-                                                        <button class="btn btn-icon btn-danger" id="modal-1"
-                                                            data-toggle="modal"
-                                                            data-target="#deleteModal-{{ $lokasi->id_lokasi }}"><i
-                                                                class="fas fa-times"></i></button>
-                                                    </td>
+                                                    @if (session('level') != 'Asst. HSE & DP')
+                                                        <td class="text-center">
+                                                            <button class="btn btn-icon btn-primary" id="modal-1"
+                                                                data-toggle="modal"
+                                                                data-target="#editModal-{{ $lokasi->id_lokasi }}"><i
+                                                                    class="far fa-edit"></i></button>
+                                                            <button class="btn btn-icon btn-danger" id="modal-1"
+                                                                data-toggle="modal"
+                                                                data-target="#deleteModal-{{ $lokasi->id_lokasi }}"><i
+                                                                    class="fas fa-times"></i></button>
+                                                        </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -71,7 +71,7 @@
 
                 <li class="{{ Str::startsWith($currentRoute, 'summary-tipe-apar') ? 'active' : '' }}"><a
                         class="nav-link" href="{{ route('summary-tipe-apar') }}"><i class="fas fa-file-alt"></i>
-                        <span>Summary Jenis
+                        <span>Summary Tipe
                             Apar</span></a>
                 </li>
 
