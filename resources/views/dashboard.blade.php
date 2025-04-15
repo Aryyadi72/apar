@@ -77,12 +77,19 @@
                                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                 }).addTo(map);
 
-                                var circle = L.circle([-3.62661997195365, 114.86067632270333], {
-                                    color: 'red',
-                                    fillColor: '#f03',
-                                    fillOpacity: 0.5,
-                                    radius: 300
-                                }).addTo(map);
+                                // var circle = L.circle([-3.62661997195365, 114.86067632270333], {
+                                //     color: 'red',
+                                //     fillColor: '#f03',
+                                //     fillOpacity: 0.5,
+                                //     radius: 500
+                                // }).addTo(map);
+
+                                var polygon = L.polygon([
+                                    [-3.624447622618672, 114.85988445898862],
+                                    [-3.624641439959675, 114.86400162205443],
+                                    [-3.628277292694447, 114.86413394082099],
+                                    [-3.6285783603650548, 114.86031567833093]
+                                ]).addTo(map);
 
                                 @foreach ($apars as $apar)
                                     L.marker([{{ $apar->latitude }}, {{ $apar->longitude }}])
