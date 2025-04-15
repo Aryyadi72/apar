@@ -28,8 +28,8 @@
                                                 <th rowspan="2">Jumlah</th>
                                             </tr>
                                             <tr>
-                                                <th>OK</th>
-                                                <th>NG</th>
+                                                <th>Bagus</th>
+                                                <th>Tidak Bagus</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">

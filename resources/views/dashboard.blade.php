@@ -10,7 +10,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-            <h1 class="sub-title">SISTEM INFORMASI GEOGRAFIS MONITORING APAR PT. BRIDGESTONE KALIMANTAN PLANTATION BERBASIS WEB</h1>
+            <h1 class="sub-title">DASHBOARD - SISTEM INFORMASI GEOGRAFIS MONITORING APAR PT. BRIDGESTONE KALIMANTAN PLANTATION BERBASIS WEB</h1>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
@@ -75,6 +75,13 @@
                                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                     maxZoom: 50,
                                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                }).addTo(map);
+
+                                var circle = L.circle([-3.62661997195365, 114.86067632270333], {
+                                    color: 'red',
+                                    fillColor: '#f03',
+                                    fillOpacity: 0.5,
+                                    radius: 300
                                 }).addTo(map);
 
                                 @foreach ($apars as $apar)

@@ -124,8 +124,8 @@ class KondisiAparController extends Controller
     {
         $title = 'Sumamry Kondisi Apar Perbulan';
 
-        // $yearNow = Carbon::now()->year;
-        $yearNow = '2024';
+        $yearNow = Carbon::now()->year;
+        // $yearNow = '2024';
 
         $summaryKondisiAparJan = KondisiApar::where('tahun', $yearNow)->where('bulan', 'January')->where('judge', 'B')->count();
         $summaryKondisiAparJanTB = KondisiApar::where('tahun', $yearNow)->where('bulan', 'January')->where('judge', 'TB')->count();
