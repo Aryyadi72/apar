@@ -25,6 +25,7 @@ class KondisiAparController extends Controller
                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
                 ->select(
+                    'kondisi_apars.tahun',
                     'kondisi_apars.bulan',
                     'kondisi_apars.segel',
                     'kondisi_apars.jarum',
@@ -46,6 +47,7 @@ class KondisiAparController extends Controller
                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
                 ->select(
+                    'kondisi_apars.tahun',
                     'kondisi_apars.bulan',
                     'kondisi_apars.segel',
                     'kondisi_apars.jarum',

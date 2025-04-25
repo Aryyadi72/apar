@@ -58,7 +58,7 @@
                                                     @endif
                                                     @if (session('level') != 'Asst. HSE & DP' && session('level') != 'Asst. Sub Div')
                                                         <td class="text-center">
-                                                            @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                                                            @if (session('level') != 'Asst. Sub Div')
                                                                 <a href="{{ route('apar.edit', $apar->apar_id) }}"
                                                                     class="btn btn-icon btn-primary">
                                                                     <i class="far fa-edit"></i>

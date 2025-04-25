@@ -58,10 +58,14 @@
                                                     @else
                                                         <td>-</td>
                                                     @endif
-                                                    @if ($next_refill == $today)
+                                                    @if ($next_refill <= $today)
                                                         @if (session('level') != 'Asst. Sub Div')
-                                                            <td><button class="btn btn-icon btn-primary"><i
-                                                                        class="fas fa-gas-pump"></i></button></td>
+                                                            <td>
+                                                                <button class="btn btn-icon btn-primary" id="modal-1"
+                                                                data-toggle="modal"
+                                                                data-target="#refillModal-{{ $refill->apar_id }}"><i
+                                                                    class="fas fa-gas-pump"></i></button>
+                                                            </td>
                                                         @endif
                                                     @else
                                                         @if (session('level') != 'Asst. Sub Div')
@@ -81,4 +85,36 @@
             </div>
         </section>
     </div>
+
+    @foreach ($refills as $refill)
+    <div class="modal fade" tabindex="-1" role="dialog" id="refillModal-{{ $refill->apar_id }}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Input Data Refill</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('refill.update', $refill->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <input type="hidden" name="id_apar" value="{{ $refill->apar_id }}">
+                            <input type="hidden" name="tipe" value="{{ $refill->tipe }}">
+                            <div class="form-group">
+                                <label>Terakhir Refill</label>
+                                <input type="date" class="form-control" placeholder="Masukkan tanggal terakhir refill"
+                                    name="terakhir_refill">
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-whitesmoke br">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
