@@ -71,6 +71,53 @@ class ChecklistAparController extends Controller
         ]);
     }
 
+    // public function create()
+    // {
+    //     $title = 'Tambah Checklist Apar';
+
+    //     $monthNow = Carbon::now()->month;
+    //     $yearNow = Carbon::now()->year;
+
+    //     $divisiId = Session::get('id_divisi');
+
+    //     $cekDataApars = DB::table('checklist_apars')
+    //         ->whereMonth('checklist_apars.tanggal_pengecekan', $monthNow)
+    //         ->whereYear('checklist_apars.tanggal_pengecekan', $yearNow)
+    //         ->get();
+
+    //     foreach ($cekDataApars as $cekDataApar) {
+    //         if ($divisiId == null) {
+    //             $apars = DB::table('apars')
+    //                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+    //                 ->select(
+    //                     'apars.id as id_apar',
+    //                     'lokasis.lokasi',
+    //                     'divisis.divisi',
+    //                 )
+    //                 ->where('apars.id', '!=', $cekDataApar->id_apar)
+    //                 ->get();
+    //         } else {
+    //             $apars = DB::table('apars')
+    //                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+    //                 ->select(
+    //                     'apars.id as id_apar',
+    //                     'lokasis.lokasi',
+    //                     'divisis.divisi',
+    //                 )
+    //                 ->where('divisis.id', $divisiId)
+    //                 ->where('apars.id', '!=', $cekDataApar->id_apar)
+    //                 ->get();
+    //         }
+    //     }
+        
+    //     return view('checklist-apar.create', [
+    //         'title' => $title,
+    //         'apars' => $apars
+    //     ]);
+    // }
+
     public function create()
     {
         $title = 'Tambah Checklist Apar';
@@ -78,29 +125,32 @@ class ChecklistAparController extends Controller
         $monthNow = Carbon::now()->month;
         $yearNow = Carbon::now()->year;
 
-        $cekDataApars = DB::table('checklist_apars')
-            // ->join('checklist_apars', 'checklist_apars.id_apar', '=', 'apars.id')
-            // ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
-            ->whereMonth('checklist_apars.tanggal_pengecekan', $monthNow)
-            ->whereYear('checklist_apars.tanggal_pengecekan', $yearNow)
-            ->get();
+        $divisiId = Session::get('id_divisi');
 
-            // dd($cekDataApars, $monthNow, $yearNow);
+        $checkedAparIds = DB::table('checklist_apars')
+            ->whereMonth('tanggal_pengecekan', $monthNow)
+            ->whereYear('tanggal_pengecekan', $yearNow)
+            ->pluck('id_apar')
+            ->toArray();
 
-        foreach ($cekDataApars as $cekDataApar) {
-            $apars = DB::table('apars')
-                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-                ->select(
-                    'apars.id as id_apar',
-                    'lokasis.lokasi',
-                    'divisis.divisi',
-                )
-                ->where('apars.kode_apar', '!=', $cekDataApar->id_apar)
-                ->get();
-            }
-            
-            // dd($apars);
+        $query = DB::table('apars')
+            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+            ->select(
+                'apars.id as id_apar',
+                'lokasis.lokasi',
+                'divisis.divisi'
+            );
+
+        if ($divisiId !== null) {
+            $query->where('divisis.id', $divisiId);
+        }
+
+        if (!empty($checkedAparIds)) {
+            $query->whereNotIn('apars.id', $checkedAparIds);
+        }
+
+        $apars = $query->get();
 
         return view('checklist-apar.create', [
             'title' => $title,

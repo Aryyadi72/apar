@@ -29,7 +29,7 @@
                                                 <th rowspan="2">Bulan</th>
                                                 <th rowspan="2">Tanggal Pengecekan</th>
                                                 <th rowspan="2">Nama Lokasi / Kode Lokasi</th>
-                                                <th rowspan="2">No APAR</th>
+                                                <th rowspan="2">Kode APAR</th>
                                                 <th colspan="4">APAR</th>
                                                 <th rowspan="2">Apakah air penuh (Drum 2 bh)</th>
                                                 <th rowspan="2">Apakah karung goni baik dan lengkap (5 bh)</th>

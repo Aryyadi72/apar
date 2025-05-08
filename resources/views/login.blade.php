@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="simple-footer">
-                            Copyright &copy; SIGMAPAR 2024
+                            Copyright by; Achmad Ruby Cahyadi
                         </div>
                     </div>
                 </div>
