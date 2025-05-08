@@ -49,7 +49,7 @@
                                                     <td>{{ $apar->tipe }}</td>
                                                     <td>{{ $apar->divisi }}</td>
                                                     <td>{{ $apar->lokasi }}</td>
-                                                    <td>{{ $apar->berat }} kg</td>
+                                                    <td>{{ $apar->berat }} kg</td> 
                                                     @if ($apar->tanggal_pembelian == null)
                                                         <td> - </td>
                                                     @else
