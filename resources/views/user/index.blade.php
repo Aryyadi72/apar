@@ -98,7 +98,7 @@
                             <select class="form-control" name="id_divisi">
                                 <option value="" selected disabled>Pilih Divisi</option>
                                 @foreach ($divisis as $divisi)
-                                    <option value="{{ $divisi->divisi_id }}">{{ $divisi->divisi }}</option>
+                                    <option value="{{ $divisi->id }}">{{ $divisi->divisi }}</option>
                                 @endforeach
                             </select>
                         </div>
