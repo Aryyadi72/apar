@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('kondisi_apars', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_apar');
+            $table->unsignedBigInteger('id_apar');
             $table->string('bulan');
             $table->enum('segel', ['B', 'TB']);
             $table->enum('jarum', ['B', 'TB']);
@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->enum('nozzle', ['B', 'TB']);
             $table->enum('judge', ['B', 'TB']);
             $table->timestamps();
+
+            $table->foreign('id_apar')->references('id')->on('apars')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

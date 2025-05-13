@@ -10,7 +10,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Dashboard</h1>
+            <h1 class="sub-title">DASHBOARD - SISTEM INFORMASI GEOGRAFIS MONITORING APAR PT. BRIDGESTONE KALIMANTAN PLANTATION BERBASIS WEB</h1>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
@@ -68,7 +68,7 @@
                             <h4>Lokasi Apar</h4>
                         </div>
                         <div class="card-body">
-                            <div id="map" style="height: 440px;"></div>
+                            <div id="map" style="height: 600px;"></div>
                             <script>
                                 var map = L.map('map').setView([-3.62661997195365, 114.86067632270333], 18);
 
@@ -77,12 +77,33 @@
                                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                 }).addTo(map);
 
-                                var circle = L.circle([-3.62661997195365, 114.86067632270333], {
-                                    color: 'red',
-                                    fillColor: '#f03',
-                                    fillOpacity: 0.5,
-                                    radius: 500
-                                }).addTo(map);
+                                // var circle = L.circle([-3.62661997195365, 114.86067632270333], {
+                                //     color: 'red',
+                                //     fillColor: '#f03',
+                                //     fillOpacity: 0.5,
+                                //     radius: 500
+                                // }).addTo(map);
+
+                                var polygon = L.polygon([
+                                    [-3.5722962552281414, 114.87462107933601],
+                                    [-3.5725138415846867, 114.8750383168975],
+                                    [-3.572391993231372, 114.87509198089253],
+                                    [-3.57217976281913, 114.87468145133045]
+                                ]).addTo(map);
+
+                                var polygon = L.polygon([
+                                    [-3.6242551897855524, 114.86016008117701],
+                                    [-3.6242555561680985, 114.86421564070073],
+                                    [-3.6281161423718906, 114.86416245419295],
+                                    [-3.628137605727953, 114.86020409837272]
+                                ]).addTo(map);
+
+                                var polygon = L.polygon([
+                                    [-3.574484363608761, 114.87183001149208],
+                                    [-3.575952545656157, 114.87060928418063],
+                                    [-3.5763392692027423, 114.87115792566283],
+                                    [-3.5749087334810854, 114.87224149260372]
+                                ]).addTo(map);
 
                                 @foreach ($apars as $apar)
                                     L.marker([{{ $apar->latitude }}, {{ $apar->longitude }}])
@@ -152,4 +173,5 @@
             </div>
         </section>
     </div>
+    
 @endsection

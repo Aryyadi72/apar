@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,8 +13,8 @@ return new class extends Migration
         Schema::create('checklist_apars', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_pengecekan');
-            $table->integer('id_lokasi');
-            $table->integer('id_apar');
+            $table->unsignedBigInteger('id_apar');
+            $table->unsignedBigInteger('id_lokasi');
             $table->string('kondisi_segel');
             $table->string('posisi_jarum');
             $table->string('kondisi_selang');
@@ -31,6 +30,9 @@ return new class extends Migration
             $table->string('approve_hse_dp');
             $table->string('approve_mng');
             $table->timestamps();
+
+            $table->foreign('id_apar')->references('id')->on('apars')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('id_lokasi')->references('id')->on('lokasis')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

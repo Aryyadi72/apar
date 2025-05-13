@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            @if (session('level') != 'Asst. HSE & DP')
+                            @if (session('level') != 'Asst. HSE & DP' && session('level') != 'Asst. Sub Div')
                                 <div class="card-header">
                                     <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
                                 </div>
@@ -35,7 +35,7 @@
                                                 <th>Lokasi</th>
                                                 <th>Berat</th>
                                                 <th>Tanggal Pembelian</th>
-                                                @if (session('level') != 'Asst. HSE & DP')
+                                                @if (session('level') != 'Asst. HSE & DP' && session('level') != 'Asst. Sub Div')
                                                     <th class="text-center">Option</th>
                                                 @endif
                                             </tr>
@@ -49,16 +49,16 @@
                                                     <td>{{ $apar->tipe }}</td>
                                                     <td>{{ $apar->divisi }}</td>
                                                     <td>{{ $apar->lokasi }}</td>
-                                                    <td>{{ $apar->berat }} kg</td>
+                                                    <td>{{ $apar->berat }} kg</td> 
                                                     @if ($apar->tanggal_pembelian == null)
                                                         <td> - </td>
                                                     @else
                                                         <td>{{ \Carbon\Carbon::parse($apar->tanggal_pembelian)->format('d-m-Y') }}
                                                         </td>
                                                     @endif
-                                                    @if (session('level') != 'Asst. HSE & DP')
+                                                    @if (session('level') != 'Asst. HSE & DP' && session('level') != 'Asst. Sub Div')
                                                         <td class="text-center">
-                                                            @if (session('level') != 'Petugas' && session('level') != 'Asst. Sub Div')
+                                                            @if (session('level') != 'Asst. Sub Div')
                                                                 <a href="{{ route('apar.edit', $apar->apar_id) }}"
                                                                     class="btn btn-icon btn-primary">
                                                                     <i class="far fa-edit"></i>

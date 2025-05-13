@@ -12,11 +12,13 @@ return new class extends Migration {
     {
         Schema::create('refills', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_apar');
+            $table->unsignedBigInteger('id_apar');
             $table->integer('standard_pengisian');
             $table->date('terakhir_refill');
             $table->date('next_refill');
             $table->timestamps();
+
+            $table->foreign('id_apar')->references('id')->on('apars')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

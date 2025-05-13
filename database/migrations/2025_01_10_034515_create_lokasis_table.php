@@ -12,9 +12,11 @@ return new class extends Migration {
     {
         Schema::create('lokasis', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_divisi');
+            $table->unsignedBigInteger('id_divisi');
             $table->string('lokasi');
             $table->timestamps();
+
+            $table->foreign('id_divisi')->references('id')->on('divisis')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

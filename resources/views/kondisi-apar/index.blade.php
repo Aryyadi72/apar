@@ -15,9 +15,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <!-- @if(session('level') == 'Petugas')
                             <div class="card-header">
-                                {{-- <a href="{{ route('apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a> --}}
-                            </div>
+                                    <a href="{{ route('kondisi-apar.create') }}" class="btn btn-icon btn-primary">Tambah Data</a>
+                                </div>
+                                @endif -->
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
@@ -43,8 +45,10 @@
                                             @foreach ($kondisiApars as $index => $kondisiApar)
                                                 <tr>
                                                     <td class="text-center">{{ $index + 1 }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($kondisiApar->bulan)->format('Y') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($kondisiApar->bulan)->format('F') }}</td>
+                                                    <!-- <td>{{ \Carbon\Carbon::parse($kondisiApar->tahun)->format('Y') }}</td> -->
+                                                    <td>{{ $kondisiApar->tahun }}</td>
+                                                    <td>{{ $kondisiApar->bulan }}</td>
+                                                    <!-- <td>{{ \Carbon\Carbon::parse($kondisiApar->bulan)->format('F') }}</td> -->
                                                     <td>{{ $kondisiApar->kode_apar }}</td>
                                                     <td>{{ $kondisiApar->divisi }}</td>
                                                     <td>{{ $kondisiApar->lokasi }}</td>

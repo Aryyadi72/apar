@@ -7,60 +7,169 @@ use App\Models\ChecklistApar;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use Carbon\Carbon;
+
 
 class ChecklistAparController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $title = 'Checklist Apar';
+
+    //     $divisiId = Session::get('id_divisi');
+
+    //     if ($divisiId == null) {
+    //         $checklistApars = DB::table('checklist_apars')
+    //             ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+    //             ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //             ->select(
+    //                 'checklist_apars.tanggal_pengecekan',
+    //                 'checklist_apars.kondisi_segel',
+    //                 'checklist_apars.posisi_jarum',
+    //                 'checklist_apars.kondisi_selang',
+    //                 'checklist_apars.kondisi_tabung',
+    //                 'checklist_apars.kondisi_air',
+    //                 'checklist_apars.kondisi_karung',
+    //                 'checklist_apars.kondisi_box',
+    //                 'checklist_apars.lain_lain',
+    //                 'checklist_apars.komentar',
+    //                 'lokasis.lokasi',
+    //                 'apars.kode_apar'
+    //             )
+    //             ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
+    //             ->orderBy('checklist_apars.tanggal_pengecekan')
+    //             ->get()
+    //             ->groupBy('bulan');
+    //     } else {
+    //         $checklistApars = DB::table('checklist_apars')
+    //             ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+    //             ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //             ->select(
+    //                 'checklist_apars.tanggal_pengecekan',
+    //                 'checklist_apars.kondisi_segel',
+    //                 'checklist_apars.posisi_jarum',
+    //                 'checklist_apars.kondisi_selang',
+    //                 'checklist_apars.kondisi_tabung',
+    //                 'checklist_apars.kondisi_air',
+    //                 'checklist_apars.kondisi_karung',
+    //                 'checklist_apars.kondisi_box',
+    //                 'checklist_apars.lain_lain',
+    //                 'checklist_apars.komentar',
+    //                 'lokasis.lokasi',
+    //                 'apars.kode_apar'
+    //             )
+    //             ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
+    //             ->orderBy('checklist_apars.tanggal_pengecekan')
+    //             ->where('lokasis.id_divisi', $divisiId)
+    //             ->get()
+    //             ->groupBy('bulan');
+    //     }
+
+    //     return view('checklist-apar.index', [
+    //         'title' => $title,
+    //         'checklistApars' => $checklistApars
+    //     ]);
+    // }
+
+    public function index(Request $request)
     {
+        // dd($request->all());
         $title = 'Checklist Apar';
 
         $divisiId = Session::get('id_divisi');
 
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+
         if ($divisiId == null) {
-            $checklistApars = DB::table('checklist_apars')
-                ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
-                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-                ->select(
-                    'checklist_apars.tanggal_pengecekan',
-                    'checklist_apars.kondisi_segel',
-                    'checklist_apars.posisi_jarum',
-                    'checklist_apars.kondisi_selang',
-                    'checklist_apars.kondisi_tabung',
-                    'checklist_apars.kondisi_air',
-                    'checklist_apars.kondisi_karung',
-                    'checklist_apars.kondisi_box',
-                    'checklist_apars.lain_lain',
-                    'checklist_apars.komentar',
-                    'lokasis.lokasi',
-                    'apars.kode_apar'
-                )
-                ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
-                ->orderBy('checklist_apars.tanggal_pengecekan')
-                ->get()
-                ->groupBy('bulan');
+            if ($startDate == null && $endDate == null) {
+                $checklistApars = DB::table('checklist_apars')
+                    ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                    ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                    ->select(
+                        'checklist_apars.tanggal_pengecekan',
+                        'checklist_apars.kondisi_segel',
+                        'checklist_apars.posisi_jarum',
+                        'checklist_apars.kondisi_selang',
+                        'checklist_apars.kondisi_tabung',
+                        'checklist_apars.kondisi_air',
+                        'checklist_apars.kondisi_karung',
+                        'checklist_apars.kondisi_box',
+                        'checklist_apars.lain_lain',
+                        'checklist_apars.komentar',
+                        'lokasis.lokasi',
+                        'apars.kode_apar'
+                    )
+                    ->orderBy('checklist_apars.tanggal_pengecekan')
+                    ->get();
+            } else {
+                $checklistApars = DB::table('checklist_apars')
+                    ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                    ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                    ->select(
+                        'checklist_apars.tanggal_pengecekan',
+                        'checklist_apars.kondisi_segel',
+                        'checklist_apars.posisi_jarum',
+                        'checklist_apars.kondisi_selang',
+                        'checklist_apars.kondisi_tabung',
+                        'checklist_apars.kondisi_air',
+                        'checklist_apars.kondisi_karung',
+                        'checklist_apars.kondisi_box',
+                        'checklist_apars.lain_lain',
+                        'checklist_apars.komentar',
+                        'lokasis.lokasi',
+                        'apars.kode_apar'
+                    )
+                    ->whereBetween('checklist_apars.tanggal_pengecekan', [$startDate, $endDate])
+                    ->orderBy('checklist_apars.tanggal_pengecekan')
+                    ->get();
+            }
+
         } else {
-            $checklistApars = DB::table('checklist_apars')
-                ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
-                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-                ->select(
-                    'checklist_apars.tanggal_pengecekan',
-                    'checklist_apars.kondisi_segel',
-                    'checklist_apars.posisi_jarum',
-                    'checklist_apars.kondisi_selang',
-                    'checklist_apars.kondisi_tabung',
-                    'checklist_apars.kondisi_air',
-                    'checklist_apars.kondisi_karung',
-                    'checklist_apars.kondisi_box',
-                    'checklist_apars.lain_lain',
-                    'checklist_apars.komentar',
-                    'lokasis.lokasi',
-                    'apars.kode_apar'
-                )
-                ->selectRaw("DATE_FORMAT(checklist_apars.tanggal_pengecekan, '%M') as bulan")
-                ->orderBy('checklist_apars.tanggal_pengecekan')
-                ->where('lokasis.id_divisi', $divisiId)
-                ->get()
-                ->groupBy('bulan');
+            if ($startDate == null && $endDate == null) {
+                $checklistApars = DB::table('checklist_apars')
+                    ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                    ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                    ->select(
+                        'checklist_apars.tanggal_pengecekan',
+                        'checklist_apars.kondisi_segel',
+                        'checklist_apars.posisi_jarum',
+                        'checklist_apars.kondisi_selang',
+                        'checklist_apars.kondisi_tabung',
+                        'checklist_apars.kondisi_air',
+                        'checklist_apars.kondisi_karung',
+                        'checklist_apars.kondisi_box',
+                        'checklist_apars.lain_lain',
+                        'checklist_apars.komentar',
+                        'lokasis.lokasi',
+                        'apars.kode_apar'
+                    )
+                    ->where('lokasis.id_divisi', $divisiId)
+                    ->orderBy('checklist_apars.tanggal_pengecekan')
+                    ->get();
+            } else {
+                $checklistApars = DB::table('checklist_apars')
+                    ->join('apars', 'apars.id', '=', 'checklist_apars.id_apar')
+                    ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+                    ->select(
+                        'checklist_apars.tanggal_pengecekan',
+                        'checklist_apars.kondisi_segel',
+                        'checklist_apars.posisi_jarum',
+                        'checklist_apars.kondisi_selang',
+                        'checklist_apars.kondisi_tabung',
+                        'checklist_apars.kondisi_air',
+                        'checklist_apars.kondisi_karung',
+                        'checklist_apars.kondisi_box',
+                        'checklist_apars.lain_lain',
+                        'checklist_apars.komentar',
+                        'lokasis.lokasi',
+                        'apars.kode_apar'
+                    )
+                    ->where('lokasis.id_divisi', $divisiId)
+                    ->whereBetween('checklist_apars.tanggal_pengecekan', [$startDate, $endDate])
+                    ->orderBy('checklist_apars.tanggal_pengecekan')
+                    ->get();
+            }
         }
 
         return view('checklist-apar.index', [
@@ -69,28 +178,86 @@ class ChecklistAparController extends Controller
         ]);
     }
 
+    // public function create()
+    // {
+    //     $title = 'Tambah Checklist Apar';
+
+    //     $monthNow = Carbon::now()->month;
+    //     $yearNow = Carbon::now()->year;
+
+    //     $divisiId = Session::get('id_divisi');
+
+    //     $cekDataApars = DB::table('checklist_apars')
+    //         ->whereMonth('checklist_apars.tanggal_pengecekan', $monthNow)
+    //         ->whereYear('checklist_apars.tanggal_pengecekan', $yearNow)
+    //         ->get();
+
+    //     foreach ($cekDataApars as $cekDataApar) {
+    //         if ($divisiId == null) {
+    //             $apars = DB::table('apars')
+    //                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+    //                 ->select(
+    //                     'apars.id as id_apar',
+    //                     'lokasis.lokasi',
+    //                     'divisis.divisi',
+    //                 )
+    //                 ->where('apars.id', '!=', $cekDataApar->id_apar)
+    //                 ->get();
+    //         } else {
+    //             $apars = DB::table('apars')
+    //                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+    //                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+    //                 ->select(
+    //                     'apars.id as id_apar',
+    //                     'lokasis.lokasi',
+    //                     'divisis.divisi',
+    //                 )
+    //                 ->where('divisis.id', $divisiId)
+    //                 ->where('apars.id', '!=', $cekDataApar->id_apar)
+    //                 ->get();
+    //         }
+    //     }
+
+    //     return view('checklist-apar.create', [
+    //         'title' => $title,
+    //         'apars' => $apars
+    //     ]);
+    // }
+
     public function create()
     {
         $title = 'Tambah Checklist Apar';
 
-        $cekDataApars = DB::table('apars')
-            ->join('checklist_apars', 'checklist_apars.id_apar', '=', 'apars.id')
-            ->get();
+        $monthNow = Carbon::now()->month;
+        $yearNow = Carbon::now()->year;
 
-        foreach ($cekDataApars as $cekDataApar) {
-            $apars = DB::table('apars')
-                ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
-                ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
-                ->select(
-                    'apars.id as id_apar',
-                    'lokasis.lokasi',
-                    'divisis.divisi',
-                )
-                ->where('apars.id', '!=', $cekDataApar->id_apar)
-                ->get();
+        $divisiId = Session::get('id_divisi');
+
+        $checkedAparIds = DB::table('checklist_apars')
+            ->whereMonth('tanggal_pengecekan', $monthNow)
+            ->whereYear('tanggal_pengecekan', $yearNow)
+            ->pluck('id_apar')
+            ->toArray();
+
+        $query = DB::table('apars')
+            ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
+            ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
+            ->select(
+                'apars.id as id_apar',
+                'lokasis.lokasi',
+                'divisis.divisi'
+            );
+
+        if ($divisiId !== null) {
+            $query->where('divisis.id', $divisiId);
         }
 
-        // dd($apars);
+        if (!empty($checkedAparIds)) {
+            $query->whereNotIn('apars.id', $checkedAparIds);
+        }
+
+        $apars = $query->get();
 
         return view('checklist-apar.create', [
             'title' => $title,

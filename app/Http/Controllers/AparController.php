@@ -9,6 +9,7 @@ use App\Models\TipeApar;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use Carbon\Carbon;
 
 class AparController extends Controller
 {
@@ -18,6 +19,8 @@ class AparController extends Controller
         $title = 'Apar';
 
         $divisiId = Session::get('id_divisi');
+
+        $today = Carbon::today();
 
         if ($divisiId == null) {
             $apars = DB::table('apars')
@@ -81,6 +84,7 @@ class AparController extends Controller
             'merks' => $merks,
             'tipeApars' => $tipeApars,
             'lokasis' => $lokasis,
+            'today' => $today,
         ]);
     }
 
@@ -92,15 +96,30 @@ class AparController extends Controller
 
         $tipeApars = TipeApar::all();
 
-        $lokasis = DB::table('lokasis')
-            ->join('divisis','divisis.id','=','lokasis.id_divisi')
-            ->select(
-                    'lokasis.id_divisi',
-                    'lokasis.id as id_lokasi',
-                    'lokasis.lokasi as nama_lokasi',
-                    'divisis.divisi as nama_divisi'
-                )
-            ->get();
+        $divisiId = Session::get('id_divisi');
+
+        if ($divisiId == null) {
+            $lokasis = DB::table('lokasis')
+                ->join('divisis','divisis.id','=','lokasis.id_divisi')
+                ->select(
+                        'lokasis.id_divisi',
+                        'lokasis.id as id_lokasi',
+                        'lokasis.lokasi as nama_lokasi',
+                        'divisis.divisi as nama_divisi'
+                    )
+                ->get();
+        } else {
+            $lokasis = DB::table('lokasis')
+                ->join('divisis','divisis.id','=','lokasis.id_divisi')
+                ->select(
+                        'lokasis.id_divisi',
+                        'lokasis.id as id_lokasi',
+                        'lokasis.lokasi as nama_lokasi',
+                        'divisis.divisi as nama_divisi'
+                    )
+                ->where('divisis.id', $divisiId)
+                ->get();
+        }
 
         return view('apar.create', [
             'title' => $title,
@@ -210,10 +229,10 @@ class AparController extends Controller
 
         if ($apar) {
             toastr()->closeOnHover(true)->closeDuration(10)->success('Data berhasil dihapus!');
-            return redirect()->route('tipe-apar');
+            return redirect()->route('apar');
         } else {
             toastr()->closeOnHover(true)->closeDuration(10)->error('Data tidak berhasil dihapus!');
-            return redirect()->route('tipe-apar');
+            return redirect()->route('apar');
         }
     }
 

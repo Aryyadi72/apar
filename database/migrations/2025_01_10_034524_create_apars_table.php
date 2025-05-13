@@ -13,12 +13,16 @@ return new class extends Migration {
         Schema::create('apars', function (Blueprint $table) {
             $table->id();
             $table->string('kode_apar');
-            $table->integer('id_merk');
-            $table->integer('id_tipe');
-            $table->integer('id_lokasi');
+            $table->unsignedBigInteger('id_merk');
+            $table->unsignedBigInteger('id_tipe');
+            $table->unsignedBigInteger('id_lokasi');
             $table->integer('berat');
             $table->date('tanggal_pembelian');
             $table->timestamps();
+
+            $table->foreign('id_merk')->references('id')->on('merks')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('id_tipe')->references('id')->on('tipe_apars')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('id_lokasi')->references('id')->on('lokasis')->onDelete('restrict')->onUpdate('restrict');
         });
     }
 

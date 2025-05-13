@@ -15,42 +15,64 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            @if (session('level') != 'Asst. Sub Div')
+                            @if (session('level') != 'Asst. Sub Div' && session('level') != 'Asst. HSE & DP')
                                 <div class="card-header">
                                     <a href="{{ route('checklist-apar.create') }}" class="btn btn-icon btn-primary">Tambah
                                         Data</a>
                                 </div>
                             @endif
                             <div class="card-body">
+                                <form method="GET" action="{{ route('checklist-apar') }}" class="mb-3">
+                                    <div class="form-row align-items-end">
+                                        <div class="col-md-3">
+                                            <label for="start_date">Tanggal Mulai</label>
+                                            <input type="date" name="start_date" id="start_date" class="form-control"
+                                                value="{{ request('start_date') }}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="end_date">Tanggal Akhir</label>
+                                            <input type="date" name="end_date" id="end_date" class="form-control"
+                                                value="{{ request('end_date') }}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                            <a href="{{ route('checklist-apar') }}" class="btn btn-secondary">Reset</a>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
                                         <thead>
                                             <tr class="text-center">
-                                                <th rowspan="2">Bulan</th>
-                                                <th rowspan="2">Tanggal Pengecekan</th>
-                                                <th rowspan="2">Nama Lokasi / Kode Lokasi</th>
-                                                <th rowspan="2">No APAR</th>
-                                                <th colspan="4">APAR</th>
-                                                <th rowspan="2">Apakah air penuh (Drum 2 bh)</th>
-                                                <th rowspan="2">Apakah karung goni baik dan lengkap (5 bh)</th>
-                                                <th rowspan="2">Apakah box dalam kondisi bersih</th>
-                                                <th rowspan="2">Lain-lain</th>
-                                                <th rowspan="2">Komentar</th>
-                                                {{-- <th colspan="5">Approve</th> --}}
-                                            </tr>
-                                            <tr>
+                                                {{-- <th rowspan="2">Bulan</th> --}}
+                                                <th>Tanggal Pengecekan</th>
+                                                <th>Nama Lokasi / Kode Lokasi</th>
+                                                <th>Kode APAR</th>
+                                                {{-- <th colspan="4">APAR</th> --}}
                                                 <th>Kondisi Segel</th>
                                                 <th>Jarum berada pada warna hijau</th>
                                                 <th>Selang baik (tidak retak/cacat)</th>
                                                 <th>Tabung tidak berkarat</th>
-                                                {{-- <th>Petugas</th> --}}
-                                                {{-- <th>Asst. Sub. Div</th>
-                                                <th>Asst. DP</th>
-                                                <th>Asst. HSE & DP</th>
-                                                <th>Mng. HSE & DP</th> --}}
+                                                <th>Apakah air penuh (Drum 2 bh)</th>
+                                                <th>Apakah karung goni baik dan lengkap (5 bh)</th>
+                                                <th>Apakah box dalam kondisi bersih</th>
+                                                <th>Lain-lain</th>
+                                                <th>Komentar</th>
+                                                <!-- <th colspan="5">Approve</th> -->
                                             </tr>
+                                            {{-- <tr> --}}
+                                            {{-- <th>Kondisi Segel</th> --}}
+                                            {{-- <th>Jarum berada pada warna hijau</th> --}}
+                                            {{-- <th>Selang baik (tidak retak/cacat)</th> --}}
+                                            {{-- <th>Tabung tidak berkarat</th> --}}
+                                            <!-- <th>Petugas</th>
+                                                                                                                <th>Asst. Sub. Div</th>
+                                                                                                                <th>Asst. DP</th>
+                                                                                                                <th>Asst. HSE & DP</th>
+                                                                                                                <th>Mng. HSE & DP</th> -->
+                                            {{-- </tr> --}}
                                         </thead>
-                                        <tbody class="text-center">
+                                        {{-- <tbody class="text-center">
                                             @foreach ($checklistApars as $bulan => $dataBulan)
                                                 <tr>
                                                     <td rowspan="{{ count($dataBulan) + 1 }}">{{ $bulan }}</td>
@@ -145,6 +167,98 @@
                                                         @endif
                                                     </tr>
                                                 @endforeach
+                                            @endforeach
+                                        </tbody> --}}
+
+                                        <tbody class="text-center">
+                                            @foreach ($checklistApars as $index => $checklistApar)
+                                                <tr>
+                                                    <td>{{ \Carbon\Carbon::parse($checklistApar->tanggal_pengecekan)->format('d/M/y') }}
+                                                    </td>
+                                                    <td>{{ $checklistApar->lokasi }}</td>
+                                                    <td>{{ $checklistApar->kode_apar }}</td>
+                                                    @if ($checklistApar->kondisi_segel == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_segel == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->posisi_jarum == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->posisi_jarum == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_selang == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_selang == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_tabung == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_tabung == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_air == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_air == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_karung == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_karung == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_box == 'B')
+                                                        <td><span class="badge badge-success"><i
+                                                                    class="fas fa-check"></i></span></td>
+                                                    @elseif($checklistApar->kondisi_box == null)
+                                                        <td><span class="badge badge-secondary">-</span></td>
+                                                    @else
+                                                        <td><span class="badge badge-danger"><i
+                                                                    class="fas fa-times"></i></span></td>
+                                                    @endif
+
+                                                    @if ($checklistApar->lain_lain != null)
+                                                        <td>{{ $checklistApar->lain_lain }}</td>
+                                                    @else
+                                                        <td>-</td>
+                                                    @endif
+
+                                                    @if ($checklistApar->kondisi_box == 'B')
+                                                        <td>{{ $checklistApar->komentar }}</td>
+                                                    @else
+                                                        <td>-</td>
+                                                    @endif
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>

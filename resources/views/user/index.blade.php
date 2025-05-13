@@ -16,9 +16,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
-                                    data-target="#createModal"> Tambah Data</button>
-                            </div>
+                                 <button class="btn btn-icon btn-primary" id="modal-1" data-toggle="modal"
+                                     data-target="#createModal"> Tambah Data</button>
+                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
@@ -146,13 +146,13 @@
                                     </option>
                                     <option value="Asst. Sub Div" {{ $user->level == 'Asst. Sub Div' ? 'selected' : '' }}>
                                         Asst. Sub Div</option>
-                                    <option value="Asst. DP" {{ $user->level == 'Asst. DP' ? 'selected' : '' }}>Asst. DP
+                                    <option value="Asst. HSE & DP" {{ $user->level == 'Asst. HSE & DP' ? 'selected' : '' }}>Asst. HSE & DP
                                     </option>
                                     <option value="Mng. HRD & GA" {{ $user->level == 'Mng. HRD & GA' ? 'selected' : '' }}>
                                         Mng. HRD & GA</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <select class="form-control" name="id_divisi">
                                     @foreach ($divisis as $divisi)
                                         <option value="" {{ $divisi->divisi_id == null ? 'selected' : '' }}>Pilih
@@ -160,6 +160,16 @@
                                         <option value="{{ $divisi->id }}"
                                             {{ $divisi->id == $user->id_divisi ? 'selected' : '' }}>
                                             {{ $divisi->divisi }}</option>
+                                    @endforeach
+                                </select>
+                            </div> -->
+                            <div class="form-group">
+                                <select class="form-control" name="id_divisi">
+                                    <option value="">Pilih Divisi</option>
+                                    @foreach ($divisis as $divisi)
+                                        <option value="{{ $divisi->id }}" {{ $divisi->id == $user->id_divisi ? 'selected' : '' }}>
+                                            {{ $divisi->divisi }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

@@ -32,8 +32,8 @@
                                                 <th rowspan="2">Option</th>
                                             </tr>
                                             <tr>
-                                                <th>OK</th>
-                                                <th>NG</th>
+                                                <th>Baik</th>
+                                                <th>Tidak Baik</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center">

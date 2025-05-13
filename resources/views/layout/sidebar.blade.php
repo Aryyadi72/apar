@@ -9,7 +9,7 @@
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html"><img src="{{ asset('assets/img/logo_bs.png') }}" alt="logo" width="50"
-                    style="padding-bottom: 100px; padding-top: -50px;"></a>
+                    style="padding-bottom: -50px; padding-top: -50px;"></a>
             {{-- <a href="index.html">SG</a> --}}
         </div>
         <ul class="sidebar-menu">
@@ -71,7 +71,7 @@
 
                 <li class="{{ Str::startsWith($currentRoute, 'summary-tipe-apar') ? 'active' : '' }}"><a
                         class="nav-link" href="{{ route('summary-tipe-apar') }}"><i class="fas fa-file-alt"></i>
-                        <span>Summary Jenis
+                        <span>Summary Tipe
                             Apar</span></a>
                 </li>
 

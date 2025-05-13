@@ -17,8 +17,6 @@ class DashboardController extends Controller
 
         $divisiId = Session::get('id_divisi');
 
-        // dd($divisiId);
-
         if ($divisiId == null) {
             $apars = DB::table('apars')
                 ->join('merks', 'merks.id', '=', 'apars.id_merk')
@@ -59,6 +57,10 @@ class DashboardController extends Controller
                 ->where('divisis.id', $divisiId)
                 ->get();
         }
+
+
+
+        // dd($apars);
 
         $totalApar = Apar::count();
         $totalJenisApar = TipeApar::count();

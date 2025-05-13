@@ -63,13 +63,16 @@ class UserController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, User $user)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'level' => 'required|string|max:255',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        //     'level' => 'required|string|max:255',
+        // ]);
+
+        // dd($request->all());
+
 
         $user = User::findOrFail($id);
 

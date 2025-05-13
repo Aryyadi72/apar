@@ -26,6 +26,7 @@ class RefillController extends Controller
                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
                 ->select(
+                    'refills.id',
                     'refills.standard_pengisian',
                     'refills.terakhir_refill',
                     'refills.next_refill',
@@ -47,6 +48,7 @@ class RefillController extends Controller
                 ->join('lokasis', 'lokasis.id', '=', 'apars.id_lokasi')
                 ->join('divisis', 'divisis.id', '=', 'lokasis.id_divisi')
                 ->select(
+                    'refills.id',
                     'refills.standard_pengisian',
                     'refills.terakhir_refill',
                     'refills.next_refill',
@@ -103,9 +105,39 @@ class RefillController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'id_apar' => 'required|integer',
+            'terakhir_refill' => 'required|date',
+        ]);
 
+        if ($request->tipe == 'CO') {
+            $standardPengisian = 10;
+            $nextRefill = Carbon::parse($request->terakhir_refill)->addDays(120 * 30)->timezone('Asia/Makassar')->format('Y-m-d');
+        } else {
+            $standardPengisian = 2;
+            $nextRefill = Carbon::parse($request->terakhir_refill)->addDays(2 * 365)->timezone('Asia/Makassar')->format('Y-m-d');
+        }
+
+        // dd($request->all(), $standardPengisian, $nextRefill);
+
+        $refill = Refill::findOrFail($id);
+
+        // $refill = new Refill();
+        $refill->id_apar = $request->id_apar;
+        $refill->standard_pengisian = $standardPengisian;
+        $refill->terakhir_refill = $request->terakhir_refill;
+        $refill->next_refill = $nextRefill;
+        $refill->save();
+
+        if ($refill) {
+            toastr()->closeOnHover(true)->closeDuration(10)->success('Data berhasil diubah!');
+            return redirect()->route('refill');
+        } else {
+            toastr()->closeOnHover(true)->closeDuration(10)->error('Data tidak berhasil diubah!');
+            return redirect()->route('refill');
+        }
     }
 
     public function destroy(Request $request)
